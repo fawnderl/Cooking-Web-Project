@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Favorites - Tasteloop</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.4.0/jspdf.umd.min.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Pacifico&display=swap">
+    <style>
+        body { background-color: #f7f0e3; font-family: Arial, sans-serif; }
+        .navbar { background-color: #ff7500; padding: 0.5rem; }
+        .navbar-brand { font-size: 1.8rem; font-weight: bold; color: #333; font-family: 'Pacifico', cursive; transition: transform 0.3s ease, color 0.3s ease; }
+        .navbar-brand:hover { color: #ff4500; transform: scale(1.1); }
+        .navbar-nav .nav-link { color: #333; font-weight: bold; text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3); transition: background-color 0.3s ease, transform 0.3s ease; border-radius: 5px; }
+        .navbar-nav .nav-link.active, .navbar-nav .nav-link:hover { color: #222; background-color: rgba(255, 255, 255, 0.3); transform: scale(1.05); box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15); }
+        .search-bar { max-width: 300px; }
+        .header { text-align: center; color: #ff4500; font-size: 2.5rem; margin: 20px 0; }
+        .recipe-card { border: 1px solid #ddd; border-radius: 10px; overflow: hidden; transition: transform 0.3s; margin-bottom: 20px; }
+        .recipe-card:hover { transform: scale(1.03); }
+        .recipe-card img { width: 100%; height: 200px; object-fit: cover; }
+        .recipe-card h5 { color: #333; }
+        .recipe-card p { color: #666; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+        .popup { display: none; position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 80%; max-width: 600px; padding: 20px; background-color: #fff; box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2); border-radius: 10px; z-index: 1000; }
+        .popup img { width: 100%; border-radius: 10px; margin-bottom: 15px; }
+        .popup .close-btn { position: absolute; top: 10px; right: 15px; font-size: 1.5rem; cursor: pointer; color: #ff4500; }
+        .overlay { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(0, 0, 0, 0.5); z-index: 500; }
+        footer { background-color: #333; color: #f7f0e3; padding: 1rem; }
+    </style>
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg">
+        <div class="container">
+            <a class="navbar-brand">Tasteloop</a>
+            <div class="collapse navbar-collapse">
+                <ul class="navbar-nav me-auto">
+                    <li class="nav-item"><a class="nav-link" href="index.html"><i class="bi bi-house-door"></i> Beranda</a></li>
+                    <li class="nav-item"><a class="nav-link" href="video.html"><i class="bi bi-camera-reels"></i> Video</a></li>
+                    <li class="nav-item"><a class="nav-link active" href="favorites.html"><i class="bi bi-bag-heart-fill"></i> Favorites</a></li>
+                    <li class="nav-item"><a class="nav-link" href="statistics.html"><i class="bi bi-bar-chart"></i> Statistik</a></li>
+                </ul>
+                <form class="d-flex mx-3"><input class="form-control search-bar" type="search" placeholder="Cari resep" aria-label="Search"><button class="btn btn-light"><i class="bi bi-search"></i></button></form>
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item"><a class="nav-link" href="login.html"><i class="bi bi-shield-lock"></i> Login</a></li>
+                    <li class="nav-item"><a class="nav-link" href="about.html"><i class="bi bi-person-badge"></i> About Me</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container">
+        <h1 class="header">Resep Favorit</h1>
+        <p class="text-center">Kumpulan resep favorit yang telah Anda simpan untuk mempermudah akses di lain waktu.</p>
+
+        <div class="row" id="recipe-container"></div>
+    </div>
+
+    <div class="popup" id="recipe-popup">
+        <span class="close-btn" onclick="closePopup()">&times;</span>
+        <img id="popup-image" src="" alt="Recipe Image">
+        <h4 id="popup-title"></h4>
+        <p id="popup-details"></p>
+    </div>
+    <div class="overlay" id="overlay" onclick="closePopup()"></div>
+
+    <footer class="text-center">
+        <p>&copy; 2024 Tasteloop. All Rights Reserved.</p>
+    </footer>
+
+    <script>
+        const recipes = [
+            {
+                image: "images/nasgor.jpg",
+                title: "Nasi Goreng Spesial",
+                ingredients: "Bahan: 1 porsi nasi, 1 telur, bawang merah, bawang putih, kecap secukupnya.",
+                steps: "Cara: Tumis bumbu, masukkan nasi dan telur, aduk rata.",
+            },
+            {
+                image: "images/satay.jpg",
+                title: "Sate Ayam",
+                ingredients: "Bahan: 300g ayam, kecap, bawang, garam, merica secukupnya.",
+                steps: "Cara: Marinasi ayam, tusuk sate, bakar hingga matang.",
+            },
+            {
+                image: "images/bakso.jpg",
+                title: "Bakso Sapi",
+                ingredients: "Bahan: 200g daging sapi, 50g tepung kanji, bawang secukupnya.",
+                steps: "Cara: Campur bahan, bentuk bakso, rebus hingga matang.",
+            },
+            {
+                image: "images/rendang.jpg",
+                title: "Rendang Daging",
+                ingredients: "Bahan: 500g daging sapi, 200ml santan, rempah sesuai selera.",
+                steps: "Cara: Masak daging dengan santan dan rempah hingga kering.",
+            },
+            {
+                image: "images/cumi.jpg",
+                title: "Sambal Cumi",
+                ingredients: "Bahan: 250g cumi, 1 lembar daun salam, cabai secukupnya.",
+                steps: "Cara: Masak cumi dengan tumisan cabai yang telah dihaluskan sampai harum.",
+            },
+            {
+                image: "images/tomyum.jpg",
+                title: "Tom Yum",
+                ingredients: "Bahan: 250g cumi, 1 lembar daun salam, cabai secukupnya.",
+                steps: "Cara: Masak cumi dengan tumisan cabai yang telah dihaluskan sampai harum.",
+            },
+        ];
+
+        const recipeContainer = document.getElementById("recipe-container");
+
+        recipes.forEach(recipe => {
+            const card = document.createElement("div");
+            card.classList.add("col-md-4");
+            card.innerHTML = `
+                <div class="recipe-card">
+                    <img src="${recipe.image}" alt="${recipe.title}">
+                    <div class="p-3">
+                        <h5>${recipe.title}</h5>
+                        <p>${recipe.ingredients}</p>
+                        <button class="btn btn-warning" onclick="showPopup('${recipe.image}', '${recipe.title}', '${recipe.ingredients}\\n${recipe.steps}')">Lihat Resep</button>
+                    </div>
+                </div>
+            `;
+            recipeContainer.appendChild(card);
+        });
+
+        function showPopup(image, title, details) {
+            document.getElementById("popup-image").src = image;
+            document.getElementById("popup-title").innerText = title;
+            document.getElementById("popup-details").innerText = details;
+            document.getElementById("recipe-popup").style.display = "block";
+            document.getElementById("overlay").style.display = "block";
+        }
+
+        function closePopup() {
+            document.getElementById("recipe-popup").style.display = "none";
+            document.getElementById("overlay").style.display = "none";
+        }
+    </script>
+</body>
+</html>

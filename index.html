@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tasteloop</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Pacifico&display=swap">
+    <style>
+        /* Latar belakang untuk seluruh halaman */
+        body {
+            background-color: linear-gradient(to bottom, #ffebee, #ffffff); /* Gradasi dari pink lembut ke putih */
+            font-family: Arial, sans-serif;
+        }
+
+         /* Gaya tambahan untuk banner selamat datang */
+        .welcome-text {
+            font-family: 'Pacifico', cursive; /* Menggunakan font yang sama dengan merek */
+            font-size: 2.5rem; /* Ukuran font lebih besar untuk penekanan */
+            color: #ff4500; /* Warna yang hangat dan cerah */
+            text-align: center; /* Teks rata tengah */
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2); /* Bayangan halus untuk kedalaman */
+            margin: 20px 0; /* Margin vertikal untuk jarak */
+            padding: 20px; /* Tambahkan padding untuk ruang bernapas */
+            background: rgba(255, 255, 255, 0.8); /* Latar belakang sedikit transparan */
+            border-radius: 10px; /* Sudut membulat untuk tampilan yang lebih lembut */
+            max-width: 800px; /* Batas lebar untuk meningkatkan keterbacaan */
+            margin-left: auto; /* Rata tengah blok */
+            margin-right: auto; /* Rata tengah blok */
+        }
+
+        /* Latar belakang untuk Navbar */
+        .navbar {
+            width: 100%;
+            background-color: #ff7500; /* Coral sebagai warna tema hangat */
+            padding: 0.5rem;
+        }
+        .navbar-brand {
+            pointer-events: none; /* Menonaktifkan interaksi klik */
+            cursor: default; /* Mengubah kursor menjadi default */
+            font-size: 1.8rem; /* Ukuran teks yang lebih besar */
+            font-weight: bold; /* Membuat teks lebih tebal */
+            color: #333; /* Warna coral yang mencolok */
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2); /* Bayangan halus di belakang teks */
+            font-family: 'Pacifico', cursive; /* Menggunakan font serif untuk kesan elegan */
+            transition: transform 0.3s ease, color 0.3s ease; /* Transisi untuk efek hover */
+        }
+        .navbar-brand:hover {
+            color: #ff4500; /* Warna lebih gelap saat di-hover */
+            transform: scale(1.1); /* Memperbesar sedikit saat di-hover */
+        }
+        .navbar-nav .nav-link {
+            color : #333;  /* Abu-abu gelap untuk kontras */
+            font-weight: bold; /* Membuat teks lebih tebal */
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3); /* Bayangan untuk menambah ketajaman */
+            margin-right: 5px; /* Tambahkan margin kanan untuk jarak antar link */
+            transition: background-color 0.3s ease; transform : 0.3s ease;
+            border-radius: 5px;
+        }
+        .navbar-nav .nav-link.active, .navbar-nav .nav-link:hover {
+            color: #222; /* Warna lebih gelap saat di hover */
+            background-color: rgba(255, 255, 255, 0.3); /* Latar hover lebih terang agar terlihat nyaman */  
+            transform: scale(1.05); /* Sedikit memperbesar */
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15); /* Bayangan untuk efek kedalaman */
+        }
+
+        /* Latar belakang untuk Carousel */
+        .carousel-item {
+            background-color: rgba(0, 0, 0, 0.1); /* Background semi-transparan untuk teks yang jelas */
+        }
+        .carousel-item img {
+            height: 400px;
+            object-fit: cover;
+        }
+        .carousel-control-prev-icon, .carousel-control-next-icon {
+            background-size: contain;
+            background-repeat: no-repeat;
+        }
+        .carousel-indicators button {
+            background-color: rgba(255, 127, 80, 0.8); /* Warna indikator sesuai tema */
+        }
+
+        /* Latar Belakang untuk tombol Carousel */
+        .carousel-control-prev, .carousel-control-next {
+            top: 50%;
+            transform: translateY(-50%);
+        }
+        .carousel-control-prev-icon {
+            background-image: url('https://cdn-icons-png.flaticon.com/512/271/271220.png');
+        }
+        .carousel-control-next-icon {
+            background-image: url('https://cdn-icons-png.flaticon.com/512/271/271228.png');
+        }
+
+        /* Latar Belakang untuk Footer */
+        footer {
+            background-color: #333;
+            color: #f7f0e3;
+            padding: 1rem;
+        }
+
+    </style>
+</head>
+<body class="d-flex flex-column min-vh-100">
+  <nav class="navbar navbar-expand-lg">
+  <div class="container">
+    <a class="navbar-brand">Tasteloop</a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarNav">
+          <ul class="navbar-nav me-auto">
+              <li class="nav-item">
+                  <a class="nav-link active" href="index.html"><i class="bi bi-house-door"></i> Beranda</a>
+              </li>
+              <li class="nav-item">
+                  <a class="nav-link" href="video.html"><i class="bi bi-camera-reels"></i> Video</a>
+              </li>
+              <li class="nav-item">
+                  <a class="nav-link" href="favorites.html"><i class="bi bi-bag-heart"></i> Favorites</a>
+              </li>
+              <li class="nav-item">
+                  <a class="nav-link" href="statistics.html"><i class="bi bi-bar-chart"></i> Statistik</a>
+              </li>
+          </ul>
+          <ul class="navbar-nav ms-auto">
+              <li class="nav-item">
+                  <a class="nav-link" href="login.html"><i class="bi bi-shield-lock"></i> Login</a>
+              </li>
+              <li class="nav-item">
+                  <a class="nav-link" href="about.html"><i class="bi bi-person-badge"></i> About Me</a>
+              </li>
+          </ul>
+      </div>
+  </div>
+  </nav>
+
+<div class="container flex-grow-1">
+    <section id="home" class="mt-4">
+        <h1 class="text-center" style="font-size: 2.5rem; font-weight: bold; color: #333; text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1);">
+            Temukan Beragam Inspirasi Masakan.
+        </h1>
+        <p class="text-center" style="font-size: 1.2rem; color: #666; margin-top: 10px;">
+            Siap menggugah selera dan memperkaya dapur Anda setiap hari.
+        </p>
+        <div id="recipeCarousel" class="carousel slide" data-bs-ride="carousel" data-bs-interval="3000">
+            <div class="carousel-inner" id="carouselItems"></div>
+            <button class="carousel-control-prev" type="button" data-bs-target="#recipeCarousel" data-bs-slide="prev">
+                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">Previous</span>
+            </button>
+            <button class="carousel-control-next" type="button" data-bs-target="#recipeCarousel" data-bs-slide="next">
+                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">Next</span>
+            </button>
+            <div class="carousel-indicators" id="carouselIndicators"></div>
+        </div>
+    </section>
+</div>
+
+<footer class="text-center mt-4">
+    <p>&copy; 2024 Tasteloop. Kebijakan Privasi | Syarat dan Ketentuan</p>
+</footer>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
+<script>
+    const images = [
+        'images/matah.jpg',
+        'images/nasgor.jpg',
+        'images/bebek.jpg',
+        'images/tomyum.jpg',
+        'images/cumi.jpg',
+        'images/dabu-dabu.jpg'
+    ];
+
+    const carouselItems = document.getElementById('carouselItems');
+    const carouselIndicators = document.getElementById('carouselIndicators');
+
+    if (images.length === 0) {
+        console.error('No images provided for carousel.');
+    } else {
+        images.forEach((image, index) => {
+            // Carousel Items
+            const carouselItem = document.createElement('div');
+            carouselItem.className = `carousel-item${index === 0 ? ' active' : ''}`;
+            carouselItem.innerHTML = `<img src="${image}" class="d-block w-100" alt="Makanan Lezat">`;
+            carouselItems.appendChild(carouselItem);
+
+            // Carousel Indicators
+            const indicator = document.createElement('button');
+            indicator.type = 'button';
+            indicator.setAttribute('data-bs-target', '#recipeCarousel');
+            indicator.setAttribute('data-bs-slide-to', index);
+            indicator.className = `${index === 0 ? 'active' : ''}`;
+            indicator.setAttribute('aria-current', index === 0 ? 'true' : 'false');
+            indicator.setAttribute('aria-label', `Slide ${index + 1}`);
+            carouselIndicators.appendChild(indicator);
+        });
+    }
+</script>
+
+</body>
+</html>
